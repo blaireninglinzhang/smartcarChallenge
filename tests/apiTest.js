@@ -9,7 +9,7 @@ describe('GET /vehicles/:id', function () {
             .get('/vehicles/1234')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
-            .expect(200, done) // expecting successful request
+            .expect(200, done()) // expecting successful request
     });
 });
 

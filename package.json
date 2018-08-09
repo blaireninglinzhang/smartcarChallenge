@@ -10,6 +10,6 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha 'test/apiTest.js'"
+    "test": "mocha 'tests/apiTest.js'"
   }
 }

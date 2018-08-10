@@ -32,11 +32,16 @@ const options = {
 
 function callback(err, res, body) {
 	if (err) {
-		console.log(err);
+		console.log(' the error is ' + err);
 	}
 	console.log('inside callback');
+	// console.log(res);
+	// console.log(body); // actual json object
 	console.log(res);
-	console.log(body);
+	console.log(res.body);
+	console.log(res.body.status);
+	console.log(res.statusCode); // got 200 --> cannot trust this!
+	console.log(body.status); // got 200 
 };
 
 request(options, callback);

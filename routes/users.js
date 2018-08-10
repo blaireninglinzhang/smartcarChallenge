@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 
-// 1.
-router.get('/vehicles/:id', function(req, res) {
+// GET VEHICLE INFO
+router.get('/vehicles/:id', (req, res) => {
     console.log('inside smartcar GET vehicle info');
     const id = req.params.id;
     request.post({
@@ -20,19 +20,14 @@ router.get('/vehicles/:id', function(req, res) {
         if (err) {
             console.log('an error occurred: ' + err);
         }
-        console.log('inside vehicleInfo_cb');
-        console.log('the actual status code is: ' + requestResponse.body.status);
-        console.log('the fake status code is: ' + requestResponse.statusCode); // one that we cannot trust
-        console.log('the error message is: ' + requestResponse.body.reason); 
-
-        if (body.status !== '200') { // handle bad requests
-            console.log('unsuccessful request');
+        if (body.status !== '200') {
+            console.log('request was unsuccessful');
             res.json({
                 error: requestResponse.body.status,
                 message: requestResponse.body.reason
             });
         } else {
-            console.log('request successful')
+            console.log('request was successful')
             res.json({
                 vin: body.data.vin.value,
                 color: body.data.color.value,
@@ -44,8 +39,8 @@ router.get('/vehicles/:id', function(req, res) {
     });
 });
 
-// 2. 
-router.get('/vehicles/:id/doors', function(req, res) {
+// GET SECURITY STATUS
+router.get('/vehicles/:id/doors', (req, res) => {
     console.log('inside smartcar GET security status');
     const id = req.params.id;
     request.post({
@@ -62,25 +57,20 @@ router.get('/vehicles/:id/doors', function(req, res) {
         if (err) {
             console.log('an error occurred: ' + err);
         }
-        console.log('inside vehicleInfo_cb');
-        console.log('the actual status code is: ' + requestResponse.body.status);
-        console.log('the fake status code is: ' + requestResponse.statusCode); // one that we cannot trust
-        console.log('the error message is: ' + requestResponse.body.reason); 
-
-        if (body.status !== '200') { // handle bad requests
-            console.log('unsuccessful request');
+        if (body.status !== '200') {
+            console.log('request was unsuccessful');
             res.json({
                 error: requestResponse.body.status,
                 message: requestResponse.body.reason
             });
         } else {
-            console.log('successful request');
-            res.json({
-                vin: body.data.vin.value,
-                color: body.data.color.value,
-                doorCount: body.data.fourDoorSedan.value === 'True' ? 4 : 2,
-                driveTrain: body.data.driveTrain.value
-            });
+            console.log('request was successful');
+            const items = body.data.doors.values;
+            const result = items.map( ({ location, locked }) => ({
+                location: location.value, 
+                locked: locked.value.toLowerCase() === 'true'
+            }));
+            res.json(result);
             res.end();
         }
     });

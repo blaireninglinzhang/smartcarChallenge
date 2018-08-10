@@ -10,7 +10,6 @@ module.exports = app;
 
 // const gm_url = 'http://gmapi.azurewebsites.net'; 
 
-
 app.get('/', (req, res) => res.send('Getting Started!'));
 
 

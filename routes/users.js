@@ -6,6 +6,7 @@ const request = require('request');
 router.get('/vehicles/:id', (req, res) => {
     console.log('inside smartcar GET vehicle info');
     const id = req.params.id;
+    // TODO: leave comment for smartcar --> refactor
     request.post({
         url: "http://gmapi.azurewebsites.net/getVehicleInfoService",
         json: true,
@@ -20,14 +21,13 @@ router.get('/vehicles/:id', (req, res) => {
         if (err) {
             console.log('an error occurred: ' + err);
         }
-        if (body.status !== '200') {
-            console.log('request was unsuccessful');
+        const requestStatus = body.status; // actual request status from body
+        if (requestStatus != 200) {
             res.json({
-                error: requestResponse.body.status,
-                message: requestResponse.body.reason
+                error: requestStatus,
+                message: requestResponse.body.reason || ''
             });
         } else {
-            console.log('request was successful')
             res.json({
                 vin: body.data.vin.value,
                 color: body.data.color.value,
@@ -57,20 +57,83 @@ router.get('/vehicles/:id/doors', (req, res) => {
         if (err) {
             console.log('an error occurred: ' + err);
         }
-        if (body.status !== '200') {
-            console.log('request was unsuccessful');
+        const requestStatus = body.status;
+        if (requestStatus != 200) {
             res.json({
-                error: requestResponse.body.status,
-                message: requestResponse.body.reason
+                error: requestStatus,
+                message: requestResponse.body.reason || ''
             });
         } else {
-            console.log('request was successful');
             const items = body.data.doors.values;
             const result = items.map( ({ location, locked }) => ({
                 location: location.value, 
                 locked: locked.value.toLowerCase() === 'true'
             }));
             res.json(result);
+            res.end();
+        }
+    });
+});
+
+// GET FUEL RANGE
+router.get('/vehicles/:id/fuel', (req, res) => {
+    console.log('inside smartcar GET fuel range');
+    const id = req.params.id;
+    request.post({
+        url: "http://gmapi.azurewebsites.net/getEnergyService",
+        json: true,
+        body: {
+            id: id,
+            responseType: 'JSON'
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }, (err, requestResponse, body) => {
+        if (err) {
+            console.log('an error occurred: ' + err);
+        }
+        const requestStatus = body.status;
+        if (requestStatus != 200) {
+            res.json({
+                error: requestStatus,
+                message: requestResponse.body.reason || ''
+            });
+        } else {
+            const percent = body.data.tankLevel.value;
+            res.json({percent: parseFloat(percent)});
+            res.end();
+        }
+    });
+});
+
+// GET BATTERY RANGE
+router.get('/vehicles/:id/battery', (req, res) => {
+    console.log('inside smartcar GET battery range');
+    const id = req.params.id;
+    request.post({
+        url: "http://gmapi.azurewebsites.net/getEnergyService",
+        json: true,
+        body: {
+            id: id,
+            responseType: 'JSON'
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }, (err, requestResponse, body) => {
+        if (err) {
+            console.log('an error occurred: ' + err);
+        }
+        const requestStatus = body.status;
+        if (requestStatus != 200) {
+            res.json({
+                error: requestStatus,
+                message: requestResponse.body.reason || ''
+            });
+        } else {
+            const percent = body.data.batteryLevel.value;
+            res.json({percent: parseFloat(percent)});
             res.end();
         }
     });

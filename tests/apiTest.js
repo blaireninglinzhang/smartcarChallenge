@@ -47,7 +47,7 @@ describe('GET /vehicles/:id/doors', () => {
                 expect(err).to.be.null
                 expect(res.body).to.be.an('array')
                 res.body.every(item => expect(item).to.have.all.keys('location', 'locked'))
-                res.body.every(item => expect((typeof item.locked).to.equal('boolean')))
+                res.body.every(item => expect(typeof item.locked).to.equal('boolean'))
                 done();
             });
         });
@@ -144,7 +144,6 @@ describe('POST /vehicles/:id/engine', () => {
             .end( (err, res) => {
                 if (err) return done(err);
                 expect(err).to.be.null
-                console.log('the res', res.body);
                 expect(res.body).to.have.all.keys('status')
                 done();
             });

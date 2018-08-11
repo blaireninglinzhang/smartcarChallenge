@@ -8,7 +8,7 @@ router.get('/vehicles/:id', (req, res) => {
     const id = req.params.id;
     // TODO: leave comment for smartcar --> refactor
     request.post({
-        url: "http://gmapi.azurewebsites.net/getVehicleInfoService",
+        url: 'http://gmapi.azurewebsites.net/getVehicleInfoService',
         json: true,
         body: {
             id: id,
@@ -44,7 +44,7 @@ router.get('/vehicles/:id/doors', (req, res) => {
     console.log('inside smartcar GET security status');
     const id = req.params.id;
     request.post({
-        url: "http://gmapi.azurewebsites.net/getSecurityStatusService",
+        url: 'http://gmapi.azurewebsites.net/getSecurityStatusService',
         json: true,
         body: {
             id: id,
@@ -80,7 +80,7 @@ router.get('/vehicles/:id/fuel', (req, res) => {
     console.log('inside smartcar GET fuel range');
     const id = req.params.id;
     request.post({
-        url: "http://gmapi.azurewebsites.net/getEnergyService",
+        url: 'http://gmapi.azurewebsites.net/getEnergyService',
         json: true,
         body: {
             id: id,
@@ -112,7 +112,7 @@ router.get('/vehicles/:id/battery', (req, res) => {
     console.log('inside smartcar GET battery range');
     const id = req.params.id;
     request.post({
-        url: "http://gmapi.azurewebsites.net/getEnergyService",
+        url: 'http://gmapi.azurewebsites.net/getEnergyService',
         json: true,
         body: {
             id: id,
@@ -141,14 +141,10 @@ router.get('/vehicles/:id/battery', (req, res) => {
 
 // POST START/STOP ENGINE
 router.post('/vehicles/:id/engine', (req, res) => {
-    console.log('inside smartcar POST engine action');
-    console.log('the request body is', req.body);
     const requestBody = req.body.action;
-    console.log('the requestBody is', requestBody);
-
     const id = req.params.id;
     request.post({
-        url: "http://gmapi.azurewebsites.net/actionEngineService",
+        url: 'http://gmapi.azurewebsites.net/actionEngineService',
         json: true,
         body: {
             id: id,
@@ -169,8 +165,6 @@ router.post('/vehicles/:id/engine', (req, res) => {
                 message: requestResponse.body.reason || ''
             });
         } else {
-            console.log('inside action engine action callback', body.actionResult)
-            console.log('@@@@@@@@@@@@@')
             res.json({
                 status: body.actionResult.status == 'EXECUTED' ? 'success' : 'error'
             });
@@ -178,6 +172,5 @@ router.post('/vehicles/:id/engine', (req, res) => {
         }
     });
 });
-
 
 module.exports = router;

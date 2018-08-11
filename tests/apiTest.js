@@ -1,11 +1,14 @@
 const supertest = require('supertest');
 const chai = require('chai'), 
     expect = chai.expect;
-
 const app = require('../app');
 
-// GET VEHICLE INFO *PASS* CASE
-describe('GET /vehicles/:id', () => {
+/** 
+ * Unit testing the API
+ * Each endpoint has a PASS case and a FAIL case
+ */
+
+describe('PASS GET /vehicles/:id', () => {
     it('returns vehicle info successfully', done => {
         supertest(app)
             .get('/vehicles/1234')
@@ -20,8 +23,7 @@ describe('GET /vehicles/:id', () => {
         });
 });
 
-// GET VEHICLE INFO *FAIL* CASE
-describe('GET /vehicles/:id', () => {
+describe('FAIL GET /vehicles/:id', () => {
     it('returns error and error message for get vehicle info', done => {
         supertest(app)
             .get('/vehicles/12')
@@ -35,8 +37,7 @@ describe('GET /vehicles/:id', () => {
         });
 });
 
-// GET SECURITY STATUS *PASS* CASE 
-describe('GET /vehicles/:id/doors', () => {
+describe('PASS GET /vehicles/:id/doors', () => {
     it('returns security status successfully', done => {
         supertest(app)
             .get('/vehicles/1234/doors')
@@ -52,8 +53,7 @@ describe('GET /vehicles/:id/doors', () => {
         });
 });
 
-// GET SECURITY STATUS *FAIL* CASE
-describe('GET /vehicles/:id/doors', () => {
+describe('FAIL GET /vehicles/:id/doors', () => {
     it('returns error and error message for get security status', done => {
         supertest(app)
             .get('/vehicles/34/doors')
@@ -67,8 +67,7 @@ describe('GET /vehicles/:id/doors', () => {
         });
 });
 
-// GET FUEL RANGE *PASS* CASE 
-describe('GET /vehicles/:id/fuel', () => {
+describe('PASS GET /vehicles/:id/fuel', () => {
     it('returns fuel range successfully', done => {
         supertest(app)
             .get('/vehicles/1234/fuel')
@@ -85,8 +84,7 @@ describe('GET /vehicles/:id/fuel', () => {
         });
 });
 
-// GET FUEL RANGE *FAIL* CASE 
-describe('GET /vehicles/:id/fuel', () => {
+describe('FAIL GET /vehicles/:id/fuel', () => {
     it('returns error and error message for get fuel range', done => {
         supertest(app)
             .get('/vehicles/23/fuel')
@@ -100,8 +98,7 @@ describe('GET /vehicles/:id/fuel', () => {
         });
 });
 
-// GET BATTERY RANGE *PASS* CASE 
-describe('GET /vehicles/:id/battery', () => {
+describe('PASS GET /vehicles/:id/battery', () => {
     it('returns battery range successfully', done => {
         supertest(app)
             .get('/vehicles/1234/battery')
@@ -118,8 +115,7 @@ describe('GET /vehicles/:id/battery', () => {
         });
 });
 
-// GET BATTERY RANGE *FAIL* CASE 
-describe('GET /vehicles/:id/fuel', () => {
+describe('FAIL GET /vehicles/:id/fuel', () => {
     it('returns error and error message for get battery range', done => {
         supertest(app)
             .get('/vehicles/000/battery')
@@ -133,8 +129,7 @@ describe('GET /vehicles/:id/fuel', () => {
         });
 });
 
-// POST ENGINE ACTION *PASS* CASE 
-describe('POST /vehicles/:id/engine', () => {
+describe('PASS POST /vehicles/:id/engine', () => {
     it('returns engine action successfully', done => {
         supertest(app)
             .post('/vehicles/1234/engine')
@@ -149,8 +144,7 @@ describe('POST /vehicles/:id/engine', () => {
         });
 });
 
-// POST ENGINE ACTION *FAIL* CASE 
-describe('POST /vehicles/:id/engine', () => {
+describe('FAIL POST /vehicles/:id/engine', () => {
     it('returns error and error message for post engine action', done => {
         supertest(app)
             .post('/vehicles/222/engine')

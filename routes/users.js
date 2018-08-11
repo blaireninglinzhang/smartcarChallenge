@@ -2,28 +2,26 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 
-/* 
-Get vehicle info
-*/
+/** 
+ * Make requests to the GM server and send back parsed responses here
+ * Using Express Router, define routes for: 
+ * GET /vehicles/:id
+ * GET /vehicles/:id/doors
+ * GET /vehicles/:id/fuel
+ * GET /vehicles/:id/battery
+ * POST /vehicles/:id/engine
+ */
+
 router.get('/vehicles/:id', (req, res) => {
-    console.log('inside smartcar GET vehicle info');
     const id = req.params.id;
-    // TODO: leave comment for smartcar --> refactor
     request.post({
         url: 'http://gmapi.azurewebsites.net/getVehicleInfoService',
         json: true,
-        body: {
-            id: id,
-            responseType: 'JSON'
-        },
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: { id: id, responseType: 'JSON' },
+        headers: { 'Content-Type': 'application/json' }
     }, (err, requestResponse, body) => {
-        if (err) {
-            console.log('an error occurred: ' + err);
-        }
-        const requestStatus = body.status; // actual request status from body
+        if (err) { console.log('an error occurred: ' + err); }
+        const requestStatus = body.status;
         if (requestStatus != 200) {
             res.json({
                 error: requestStatus,
@@ -41,24 +39,15 @@ router.get('/vehicles/:id', (req, res) => {
     });
 });
 
-// GET SECURITY STATUS
 router.get('/vehicles/:id/doors', (req, res) => {
-    console.log('inside smartcar GET security status');
     const id = req.params.id;
     request.post({
         url: 'http://gmapi.azurewebsites.net/getSecurityStatusService',
         json: true,
-        body: {
-            id: id,
-            responseType: 'JSON'
-        },
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: { id: id, responseType: 'JSON' },
+        headers: { 'Content-Type': 'application/json' }
     }, (err, requestResponse, body) => {
-        if (err) {
-            console.log('an error occurred: ' + err);
-        }
+        if (err) { console.log('an error occurred: ' + err); }
         const requestStatus = body.status;
         if (requestStatus != 200) {
             res.json({
@@ -77,24 +66,15 @@ router.get('/vehicles/:id/doors', (req, res) => {
     });
 });
 
-// GET FUEL RANGE
 router.get('/vehicles/:id/fuel', (req, res) => {
-    console.log('inside smartcar GET fuel range');
     const id = req.params.id;
     request.post({
         url: 'http://gmapi.azurewebsites.net/getEnergyService',
         json: true,
-        body: {
-            id: id,
-            responseType: 'JSON'
-        },
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: { id: id, responseType: 'JSON' },
+        headers: { 'Content-Type': 'application/json' }
     }, (err, requestResponse, body) => {
-        if (err) {
-            console.log('an error occurred: ' + err);
-        }
+        if (err) { console.log('an error occurred: ' + err); }
         const requestStatus = body.status;
         if (requestStatus != 200) {
             res.json({
@@ -109,24 +89,15 @@ router.get('/vehicles/:id/fuel', (req, res) => {
     });
 });
 
-// GET BATTERY RANGE
 router.get('/vehicles/:id/battery', (req, res) => {
-    console.log('inside smartcar GET battery range');
     const id = req.params.id;
     request.post({
         url: 'http://gmapi.azurewebsites.net/getEnergyService',
         json: true,
-        body: {
-            id: id,
-            responseType: 'JSON'
-        },
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        body: { id: id, responseType: 'JSON' },
+        headers: { 'Content-Type': 'application/json' }
     }, (err, requestResponse, body) => {
-        if (err) {
-            console.log('an error occurred: ' + err);
-        }
+        if (err) { console.log('an error occurred: ' + err); }
         const requestStatus = body.status;
         if (requestStatus != 200) {
             res.json({
@@ -141,7 +112,6 @@ router.get('/vehicles/:id/battery', (req, res) => {
     });
 });
 
-// POST START/STOP ENGINE
 router.post('/vehicles/:id/engine', (req, res) => {
     const requestBody = req.body.action;
     const id = req.params.id;
@@ -157,9 +127,7 @@ router.post('/vehicles/:id/engine', (req, res) => {
             'Content-Type': 'application/json'
         }
     }, (err, requestResponse, body) => {
-        if (err) {
-            console.log('an error occurred: ' + err);
-        }
+        if (err) { console.log('an error occurred: ' + err); }
         const requestStatus = body.status;
         if (requestStatus != 200) {
             res.json({

@@ -79,7 +79,7 @@ describe('PASS GET /vehicles/:id/fuel', () => {
                 expect(err).to.be.null
                 expect(res.body).to.have.property('percent')
                 if (typeof res.body.percent !== 'number'){
-                    expect(typeof res.body.percent).to.equal('object')
+                    expect(typeof res.body.percent).to.equal('object');
                 }
                 done();
             });
@@ -110,7 +110,7 @@ describe('PASS GET /vehicles/:id/battery', () => {
                 expect(err).to.be.null
                 expect(res.body).to.have.property('percent')
                 if (typeof res.body.percent !== 'number'){
-                    expect(typeof res.body.percent).to.equal('object')
+                    expect(typeof res.body.percent).to.equal('object');
                 }
                 done();
             });
@@ -132,7 +132,7 @@ describe('FAIL GET /vehicles/:id/fuel', () => {
 });
 
 describe('PASS POST /vehicles/:id/engine', () => {
-    it('returns engine action successfully', done => {
+    it('returns start engine action successfully', done => {
         supertest(app)
             .post('/vehicles/1234/engine')
             .set('Accept', 'application/json')
@@ -141,17 +141,53 @@ describe('PASS POST /vehicles/:id/engine', () => {
                 if (err) return done(err);
                 expect(err).to.be.null
                 expect(res.body).to.have.property('status')
+                if (res.body.status !== 'success') {
+                    expect(res.body.status).to.equal('error');
+                }
                 done();
             });
         });
 });
 
 describe('FAIL POST /vehicles/:id/engine', () => {
-    it('returns error and error message for post engine action', done => {
+    it('returns error and error message for post engine action start', done => {
         supertest(app)
             .post('/vehicles/222/engine')
             .set('Accept', 'application/json')
             .send({action: 'START'})
+            .end( (err, res) => {
+                if (err) return done(err);
+                expect(err).to.be.null
+                expect(res.body).to.have.all.keys('error', 'message')
+                done();
+            });
+        });
+});
+
+describe('PASS POST /vehicles/:id/engine', () => {
+    it('returns stop engine action successfully', done => {
+        supertest(app)
+            .post('/vehicles/1234/engine')
+            .set('Accept', 'application/json')
+            .send({action: 'STOP'})
+            .end( (err, res) => {
+                if (err) return done(err);
+                expect(err).to.be.null
+                expect(res.body).to.have.property('status')
+                if (res.body.status !== 'success') {
+                    expect(res.body.status).to.equal('error');
+                }
+                done();
+            });
+        });
+});
+
+describe('FAIL POST /vehicles/:id/engine', () => {
+    it('returns error and error message for post engine action stop', done => {
+        supertest(app)
+            .post('/vehicles/222/engine')
+            .set('Accept', 'application/json')
+            .send({action: 'STOP'})
             .end( (err, res) => {
                 if (err) return done(err);
                 expect(err).to.be.null

@@ -126,7 +126,7 @@ router.post('/vehicles/:id/engine', (req, res) => {
         json: true,
         body: {
             id: id,
-            command: requestBody == 'START' ? 'START_VEHICLE' : 'STOP_VEHICLE',
+            command: requestBody === 'START' ? 'START_VEHICLE' : 'STOP_VEHICLE',
             responseType: 'JSON'
         },
         headers: {
@@ -142,7 +142,7 @@ router.post('/vehicles/:id/engine', (req, res) => {
             });
         } else {
             res.json({
-                status: body.actionResult.status == 'EXECUTED' ? 'success' : 'error'
+                status: body.actionResult.status === 'EXECUTED' ? 'success' : 'error'
             });
             res.end();
         }

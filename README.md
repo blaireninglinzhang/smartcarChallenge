@@ -31,7 +31,7 @@ See `package.json` for details
 
 This project uses:
 
-[Mocha](https://github.com/mochajs/mocha) as a testing framework and [Chai](https://github.com/chaijs/chai) as an assertion library. Chai's `expect` library is used to test against the api calls
+[Mocha](https://github.com/mochajs/mocha) as a testing framework and [Chai](https://github.com/chaijs/chai) as an assertion library. Chai's `expect` library is used to test against api calls.
 
 To run tests using Mocha: 
 
@@ -43,4 +43,4 @@ npm test
 
 * Use [Postman](https://www.getpostman.com/) to validate endpoints. Run `node app.js` first. 
 
-* Mocha might get stuck running the first time, `ctrl+C` and run again. All 10 tests should be passing.
+* Mocha might get stuck running the first time, `ctrl+C` and run again. All 12 tests should be passing.

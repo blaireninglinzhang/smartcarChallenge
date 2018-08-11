@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const router = express.Router();
 const request = require('request');
@@ -83,7 +85,9 @@ router.get('/vehicles/:id/fuel', (req, res) => {
             });
         } else {
             const percent = body.data.tankLevel.value;
-            res.json({percent: parseFloat(percent)});
+            res.json({
+                percent: parseFloat(percent)
+            });
             res.end();
         }
     });
@@ -106,7 +110,9 @@ router.get('/vehicles/:id/battery', (req, res) => {
             });
         } else {
             const percent = body.data.batteryLevel.value;
-            res.json({percent: parseFloat(percent)});
+            res.json({
+                percent: parseFloat(percent)
+            });
             res.end();
         }
     });

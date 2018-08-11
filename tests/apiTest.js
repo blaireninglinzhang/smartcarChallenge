@@ -1,7 +1,6 @@
 const supertest = require('supertest');
 const chai = require('chai'), 
-    expect = chai.expect,
-    should = chai.should();
+    expect = chai.expect;
 
 const app = require('../app');
 

@@ -6,6 +6,8 @@ The Generic Motors (GM) car company has a terrible API. It returns badly structu
 
 ## Getting Started
 
+To clone repository: 
+
 ```
 git clone git@github.com:blaireninglinzhang/smartcarChallenge.git
 cd smartcarChallenge
@@ -29,10 +31,7 @@ See `package.json` for details
 
 This project uses:
 
-[Mocha](https://github.com/mochajs/mocha) as a testing framework and 
-[Chai](https://github.com/chaijs/chai) as an assertion library
-
-This project uses Chai's `expect` library to test against the api calls
+[Mocha](https://github.com/mochajs/mocha) as a testing framework and [Chai](https://github.com/chaijs/chai) as an assertion library. Chai's `expect` library is used to test against the api calls
 
 To run tests using Mocha: 
 

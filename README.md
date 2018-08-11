@@ -41,6 +41,6 @@ npm test
 
 ## Notes
 
-Use [Postman](https://www.getpostman.com/) to validate endpoints. Run `node app.js` first. 
+* Use [Postman](https://www.getpostman.com/) to validate endpoints. Run `node app.js` first. 
 
-Mocha might get stuck running the first time, `ctrl+C` and run again. All 10 tests should be passing.
+* Mocha might get stuck running the first time, `ctrl+C` and run again. All 10 tests should be passing.

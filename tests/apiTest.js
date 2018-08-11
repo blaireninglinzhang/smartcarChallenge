@@ -15,6 +15,7 @@ describe('GET /vehicles/:id', () => {
                 if (err) return done(err);
                 expect(err).to.be.null
                 expect(res.body).to.have.all.keys('vin', 'color', 'doorCount', 'driveTrain')
+                expect(typeof res.body.doorCount).to.equal('number')
                 done();
             });
         });
@@ -46,6 +47,7 @@ describe('GET /vehicles/:id/doors', () => {
                 expect(err).to.be.null
                 expect(res.body).to.be.an('array')
                 res.body.every(item => expect(item).to.have.all.keys('location', 'locked'))
+                res.body.every(item => expect((typeof item.locked).to.equal('boolean')))
                 done();
             });
         });
@@ -76,6 +78,9 @@ describe('GET /vehicles/:id/fuel', () => {
                 if (err) return done(err);
                 expect(err).to.be.null
                 expect(res.body).to.have.property('percent')
+                if (typeof res.body.percent !== 'number'){
+                    expect(typeof res.body.percent).to.equal('object')
+                }
                 done();
             });
         });
@@ -98,7 +103,7 @@ describe('GET /vehicles/:id/fuel', () => {
 
 // GET BATTERY RANGE *PASS* CASE 
 describe('GET /vehicles/:id/battery', () => {
-    it('returns fuel range successfully', done => {
+    it('returns battery range successfully', done => {
         supertest(app)
             .get('/vehicles/1234/battery')
             .set('Accept', 'application/json')
@@ -106,6 +111,9 @@ describe('GET /vehicles/:id/battery', () => {
                 if (err) return done(err);
                 expect(err).to.be.null
                 expect(res.body).to.have.property('percent')
+                if (typeof res.body.percent !== 'number'){
+                    expect(typeof res.body.percent).to.equal('object')
+                }
                 done();
             });
         });
@@ -113,7 +121,7 @@ describe('GET /vehicles/:id/battery', () => {
 
 // GET BATTERY RANGE *FAIL* CASE 
 describe('GET /vehicles/:id/fuel', () => {
-    it('returns error and error message for get fuel range', done => {
+    it('returns error and error message for get battery range', done => {
         supertest(app)
             .get('/vehicles/000/battery')
             .set('Accept', 'application/json')
@@ -125,3 +133,21 @@ describe('GET /vehicles/:id/fuel', () => {
             });
         });
 });
+
+// GET ENGINE ACTION *PASS* CASE 
+describe('POST /vehicles/:id/engine', () => {
+    it('returns engine action successfully', done => {
+        supertest(app)
+            .post('/vehicles/1234/engine')
+            .set('Accept', 'application/json')
+            .send({action: 'START'})
+            .end( (err, res) => {
+                if (err) return done(err);
+                expect(err).to.be.null
+                console.log('the res', res.body);
+                expect(res.body).to.have.all.keys('status')
+                done();
+            });
+        });
+});
+

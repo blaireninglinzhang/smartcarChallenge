@@ -139,8 +139,45 @@ router.get('/vehicles/:id/battery', (req, res) => {
     });
 });
 
+// POST START/STOP ENGINE
+router.post('/vehicles/:id/engine', (req, res) => {
+    console.log('inside smartcar POST engine action');
+    console.log('the request body is', req.body);
+    const requestBody = req.body.action;
+    console.log('the requestBody is', requestBody);
 
-
+    const id = req.params.id;
+    request.post({
+        url: "http://gmapi.azurewebsites.net/actionEngineService",
+        json: true,
+        body: {
+            id: id,
+            command: requestBody == 'START' ? 'START_VEHICLE' : 'STOP_VEHICLE',
+            responseType: 'JSON'
+        },
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }, (err, requestResponse, body) => {
+        if (err) {
+            console.log('an error occurred: ' + err);
+        }
+        const requestStatus = body.status;
+        if (requestStatus != 200) {
+            res.json({
+                error: requestStatus,
+                message: requestResponse.body.reason || ''
+            });
+        } else {
+            console.log('inside action engine action callback', body.actionResult)
+            console.log('@@@@@@@@@@@@@')
+            res.json({
+                status: body.actionResult.status == 'EXECUTED' ? 'success' : 'error'
+            });
+            res.end();
+        }
+    });
+});
 
 
 module.exports = router;

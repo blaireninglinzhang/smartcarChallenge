@@ -38,7 +38,7 @@ describe('GET /vehicles/:id', () => {
 
 // GET SECURITY STATUS *PASS* CASE 
 describe('GET /vehicles/:id/doors', () => {
-    it('returns security status info successfully', done => {
+    it('returns security status successfully', done => {
         supertest(app)
             .get('/vehicles/1234/doors')
             .set('Accept', 'application/json')
@@ -134,7 +134,7 @@ describe('GET /vehicles/:id/fuel', () => {
         });
 });
 
-// GET ENGINE ACTION *PASS* CASE 
+// POST ENGINE ACTION *PASS* CASE 
 describe('POST /vehicles/:id/engine', () => {
     it('returns engine action successfully', done => {
         supertest(app)
@@ -144,9 +144,24 @@ describe('POST /vehicles/:id/engine', () => {
             .end( (err, res) => {
                 if (err) return done(err);
                 expect(err).to.be.null
-                expect(res.body).to.have.all.keys('status')
+                expect(res.body).to.have.property('status')
                 done();
             });
         });
 });
 
+// POST ENGINE ACTION *FAIL* CASE 
+describe('POST /vehicles/:id/engine', () => {
+    it('returns error and error message for post engine action', done => {
+        supertest(app)
+            .post('/vehicles/222/engine')
+            .set('Accept', 'application/json')
+            .send({action: 'START'})
+            .end( (err, res) => {
+                if (err) return done(err);
+                expect(err).to.be.null
+                expect(res.body).to.have.all.keys('error', 'message')
+                done();
+            });
+        });
+});

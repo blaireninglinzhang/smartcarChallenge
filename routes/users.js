@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const request = require('request');
 
-// GET VEHICLE INFO
+/* 
+Get vehicle info
+*/
 router.get('/vehicles/:id', (req, res) => {
     console.log('inside smartcar GET vehicle info');
     const id = req.params.id;
